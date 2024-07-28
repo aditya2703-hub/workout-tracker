@@ -1,0 +1,43 @@
+<!-- workout-tracker.component.html -->
+
+<div class="container">
+  <h1>Workout Tracker</h1>
+  <form (ngSubmit)="addWorkout(username.value, workoutType.value,parseInput(minutes.value))">
+    <label>Username:</label>
+    <input aria-label="username" type="text" #username>
+    <br>
+    <label>Workout Type:</label>
+    <select aria-label="state"  #workoutType>
+      <option value="">Select a workout type</option>
+      <option value="Running">Running</option>
+      <option value="Swimming">Swimming</option>
+      <option value="Cycling">Cycling</option>
+    </select>
+    <br>
+    <label>Minutes:</label>
+    <input aria-label="Username" type="number" #minutes>
+    <br>
+    <button type="submit">Add Workout</button>
+  </form>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Workout Type</th>
+      <th>Minutes</th>
+    </tr>
+    <tr *ngFor="let workout of workouts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+      <td>{{ workout.username }}</td>
+      <td>{{ workout.workoutType }}</td>
+      <td>{{ workout.minutes }}</td>
+    </tr>
+  </table>
+  <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+  <button (click)="filterWorkouts()">Filter</button>
+  <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username">
+  <select aria-label="state" [(ngModel)]="filterWorkoutType">
+    <option value="">Select a workout type</option>
+    <option value="Running">Running</option>
+    <option value="Swimming">Swimming</option>
+    <option value="Cycling">Cycling</option>
+  </select>
+</div>
